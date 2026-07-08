@@ -4,7 +4,7 @@ import type { PaletteMode, Theme } from '@mui/material';
 /* -------------------------------------------------------------------------- */
 /*  Design tokens                                                             */
 /*  A single source of truth for palette + type. The look is a deep slate-    */
-/*  navy base with a restrained teal accent and a mono/utility face for data. */
+/*  navy base with a restrained teal accent + violet gradient companion.      */
 /* -------------------------------------------------------------------------- */
 
 const fonts = {
@@ -31,6 +31,8 @@ const palettes = {
     accent: '#5AC8D8',
     accentContrast: '#04222A',
     secondary: '#A9B4CC',
+    /** Violet companion — only for decorative gradients/glows, never text */
+    violet: '#7C3AED',
   },
   light: {
     bg: '#F6F7F9',
@@ -41,15 +43,75 @@ const palettes = {
     accent: '#0F7A88',
     accentContrast: '#FFFFFF',
     secondary: '#4A5878',
+    /** Violet companion — only for decorative gradients/glows, never text */
+    violet: '#6D28D9',
   },
 } as const;
 
-/** A faint blueprint grid, tuned per mode — used once, in the hero. */
+/** Slightly more visible blueprint grid — tuned per mode. Used in hero + contact. */
 export const gridBackground = (mode: PaletteMode): string => {
   const line =
-    mode === 'dark' ? 'rgba(148,163,184,0.06)' : 'rgba(15,23,42,0.045)';
+    mode === 'dark' ? 'rgba(148,163,184,0.08)' : 'rgba(15,23,42,0.055)';
   return `linear-gradient(${line} 1px, transparent 1px), linear-gradient(90deg, ${line} 1px, transparent 1px)`;
 };
+
+/** Very subtle dot-grid used as a global full-page background pattern. */
+export const dotGridBackground = (mode: PaletteMode): string => {
+  const dot = mode === 'dark' ? 'rgba(148,163,184,0.07)' : 'rgba(15,23,42,0.045)';
+  return `radial-gradient(circle, ${dot} 1px, transparent 1px)`;
+};
+
+/** Per-section radial glow accent — faint teal or violet soft blob. */
+export const sectionGlowBackground = (mode: PaletteMode, position: 'left' | 'right' = 'left'): string => {
+  if (mode === 'dark') {
+    return position === 'left'
+      ? 'radial-gradient(ellipse 50% 50% at 0% 50%, rgba(90,200,216,0.06) 0%, transparent 70%)'
+      : 'radial-gradient(ellipse 50% 50% at 100% 50%, rgba(124,58,237,0.05) 0%, transparent 70%)';
+  }
+  return position === 'left'
+    ? 'radial-gradient(ellipse 50% 50% at 0% 50%, rgba(15,122,136,0.05) 0%, transparent 70%)'
+    : 'radial-gradient(ellipse 50% 50% at 100% 50%, rgba(109,40,217,0.04) 0%, transparent 70%)';
+};
+
+/**
+ * Layered radial glow blobs for the hero section background.
+ * Creates depth with a teal glow at top-left and violet at bottom-right.
+ */
+export const heroGlowBackground = (mode: PaletteMode): string => {
+  if (mode === 'dark') {
+    return [
+      'radial-gradient(ellipse 55% 55% at 10% 0%, rgba(90,200,216,0.13) 0%, transparent 70%)',
+      'radial-gradient(ellipse 45% 50% at 95% 100%, rgba(124,58,237,0.10) 0%, transparent 70%)',
+      'radial-gradient(ellipse 30% 30% at 70% 20%, rgba(90,200,216,0.05) 0%, transparent 60%)',
+    ].join(', ');
+  }
+  return [
+    'radial-gradient(ellipse 55% 55% at 10% 0%, rgba(15,122,136,0.08) 0%, transparent 70%)',
+    'radial-gradient(ellipse 45% 50% at 95% 100%, rgba(109,40,217,0.06) 0%, transparent 70%)',
+    'radial-gradient(ellipse 30% 30% at 70% 20%, rgba(15,122,136,0.04) 0%, transparent 60%)',
+  ].join(', ');
+};
+
+/**
+ * Glassmorphism card style helper — returns an sx-compatible object.
+ * Accepts the mode and palette to compute values inline.
+ */
+export const cardGlassStyle = (mode: PaletteMode) => ({
+  backgroundColor:
+    mode === 'dark' ? 'rgba(17, 26, 46, 0.75)' : 'rgba(255,255,255,0.82)',
+  backdropFilter: 'blur(12px)',
+  WebkitBackdropFilter: 'blur(12px)',
+  backgroundImage: 'none',
+  border: '1px solid',
+  borderColor:
+    mode === 'dark' ? 'rgba(148,163,184,0.12)' : 'rgba(15,23,42,0.09)',
+});
+
+/** Gradient string used on card top-borders and decorative elements (teal → violet). */
+export const accentGradient = (mode: PaletteMode): string =>
+  mode === 'dark'
+    ? 'linear-gradient(90deg, #5AC8D8 0%, #7C3AED 100%)'
+    : 'linear-gradient(90deg, #0F7A88 0%, #6D28D9 100%)';
 
 /* -------------------------------------------------------------------------- */
 /*  Theme factory                                                             */
@@ -111,12 +173,17 @@ export const createAppTheme = (mode: PaletteMode): Theme => {
           html: {
             scrollBehavior: 'smooth',
             // Offset anchored sections so they clear the sticky navbar.
-            scrollPaddingTop: '88px',
+            scrollPaddingTop: '72px',
             WebkitFontSmoothing: 'antialiased',
           },
           body: {
             backgroundColor: c.bg,
             color: c.text,
+            /* Global dot-grid page texture */
+            backgroundImage: `radial-gradient(circle, ${
+              mode === 'dark' ? 'rgba(148,163,184,0.07)' : 'rgba(15,23,42,0.045)'
+            } 1px, transparent 1px)`,
+            backgroundSize: '28px 28px',
           },
           '::selection': {
             backgroundColor: alpha(c.accent, 0.28),
@@ -159,7 +226,7 @@ export const createAppTheme = (mode: PaletteMode): Theme => {
             fontWeight: 600,
             paddingInline: 20,
             paddingBlock: 10,
-            transition: 'transform 160ms ease, background-color 160ms ease, border-color 160ms ease',
+            transition: 'transform 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease',
             '&:hover': { transform: 'translateY(-1px)' },
           },
           outlined: {
@@ -186,6 +253,11 @@ export const createAppTheme = (mode: PaletteMode): Theme => {
             border: `1px solid ${c.divider}`,
             backgroundColor: alpha(c.muted, mode === 'dark' ? 0.08 : 0.05),
             color: c.text,
+            transition: 'background-color 160ms ease, border-color 160ms ease',
+            '&:hover': {
+              backgroundColor: alpha(c.accent, 0.1),
+              borderColor: alpha(c.accent, 0.4),
+            },
           },
           label: { paddingInline: 10 },
         },

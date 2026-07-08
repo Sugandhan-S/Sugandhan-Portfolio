@@ -16,7 +16,7 @@ import { certifications, education } from '../../data/education';
 
 export function Education() {
   return (
-    <Box component="section" id="education" sx={{ py: { xs: 6, md: 10 } }}>
+    <Box component="section" id="education" sx={{ py: { xs: 3, md: 5 } }}>
       <Container>
         <Reveal>
           <SectionHeading

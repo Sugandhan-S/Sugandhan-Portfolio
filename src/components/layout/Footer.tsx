@@ -17,7 +17,7 @@ export function Footer() {
   return (
     <Box
       component="footer"
-      sx={{ borderTop: '1px solid', borderColor: 'divider', mt: { xs: 8, md: 12 } }}
+      sx={{ borderTop: '1px solid', borderColor: 'divider', mt: { xs: 4, md: 6 } }}
     >
       <Container sx={{ py: { xs: 4, md: 5 } }}>
         <Stack
