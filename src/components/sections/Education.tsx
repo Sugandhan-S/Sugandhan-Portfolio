@@ -1,5 +1,4 @@
 import {
-  Box,
   Card,
   CardContent,
   Chip,
@@ -16,7 +15,7 @@ import { certifications, education } from '../../data/education';
 
 export function Education() {
   return (
-    <Box component="section" id="education" sx={{ py: { xs: 3, md: 5 } }}>
+    <section id="education" style={{ paddingTop: '24px', paddingBottom: '24px' }}>
       <Container>
         <Reveal>
           <SectionHeading
@@ -77,14 +76,14 @@ export function Education() {
                           fontSize="small"
                           sx={{ color: 'primary.main', flexShrink: 0 }}
                         />
-                        <Box>
+                        <div>
                           <Typography variant="body2" sx={{ fontWeight: 500 }}>
                             {cert.name}
                           </Typography>
                           <Typography variant="caption" color="text.secondary">
                             {cert.issuer}
                           </Typography>
-                        </Box>
+                        </div>
                       </Stack>
                     ))}
                   </Stack>
@@ -94,6 +93,6 @@ export function Education() {
           </Grid>
         </Grid>
       </Container>
-    </Box>
+    </section>
   );
 }

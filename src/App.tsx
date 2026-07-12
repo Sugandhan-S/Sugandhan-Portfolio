@@ -1,10 +1,15 @@
 import { Routes, Route } from 'react-router-dom';
-import { Box } from '@mui/material';
+import { keyframes } from '@mui/material/styles';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { SkipLink } from './components/common/SkipLink';
 import { Home } from './pages/Home';
 import { NotFound } from './pages/NotFound';
+
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+`;
 
 /**
  * A portfolio is essentially a single page, so routing is intentionally light:
@@ -14,23 +19,27 @@ import { NotFound } from './pages/NotFound';
  */
 export default function App() {
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
-        bgcolor: 'background.default',
       }}
     >
       <SkipLink />
       <Navbar />
-      <Box sx={{ flexGrow: 1 }}>
+      <div
+        style={{
+          flexGrow: 1,
+          animation: `${fadeIn} 0.5s ease-out both`,
+        }}
+      >
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Box>
+      </div>
       <Footer />
-    </Box>
+    </div>
   );
 }

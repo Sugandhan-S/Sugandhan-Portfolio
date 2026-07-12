@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import {
   AppBar,
-  Box,
   Button,
   Container,
   Drawer,
@@ -78,19 +77,18 @@ export function Navbar() {
       >
         <Container>
           <Toolbar disableGutters sx={{ minHeight: { xs: 64, md: 72 } }}>
-            <Box
-              component="button"
+            <button
               onClick={() => scrollTo('top')}
               aria-label="Back to top"
-              sx={{
+              style={{
                 display: 'flex',
                 alignItems: 'baseline',
-                gap: 0.75,
+                gap: '6px',
                 background: 'none',
                 border: 'none',
-                p: 0,
+                padding: 0,
                 cursor: 'pointer',
-                color: 'text.primary',
+                color: 'inherit',
               }}
             >
               <Typography
@@ -104,15 +102,10 @@ export function Navbar() {
               >
                 Sugandhan
               </Typography>
-              <Box
-                component="span"
-                sx={{ color: 'primary.main', fontWeight: 700, fontSize: '1.1rem' }}
-              >
-                .
-              </Box>
-            </Box>
+              <span style={{ color: theme.palette.primary.main, fontWeight: 700, fontSize: '1.1rem' }}>.</span>
+            </button>
 
-            <Box sx={{ flexGrow: 1 }} />
+            <div style={{ flexGrow: 1 }} />
 
             {isMobile ? (
               <Stack direction="row" spacing={0.5} alignItems="center">
@@ -203,7 +196,7 @@ export function Navbar() {
             </ListItemButton>
           ))}
         </List>
-        <Box sx={{ p: 2, mt: 'auto' }}>
+        <div style={{ padding: '16px', marginTop: 'auto' }}>
           <Button
             fullWidth
             variant="outlined"
@@ -214,7 +207,7 @@ export function Navbar() {
           >
             Download résumé
           </Button>
-        </Box>
+        </div>
       </Drawer>
     </>
   );

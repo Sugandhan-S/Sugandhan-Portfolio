@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Container,
   Stack,
@@ -16,7 +15,6 @@ import { Reveal } from '../common/Reveal';
 import { gridBackground, accentGradient } from '../../theme/theme';
 import { profile } from '../../data/profile';
 
-
 export function Contact() {
   const theme = useTheme();
   const isDark = theme.palette.mode === 'dark';
@@ -24,22 +22,29 @@ export function Contact() {
   const violetColor = isDark ? '#7C3AED' : '#6D28D9';
 
   return (
-    <Box component="section" id="contact" sx={{ py: { xs: 3, md: 5 } }}>
+    <section
+      id="contact"
+      style={{
+        paddingTop: '32px',
+        paddingBottom: '24px',
+      }}
+    >
       <Container>
         <Reveal>
-          <Box
-            sx={{
+          {/* Card outer container with gradient border */}
+          <div
+            style={{
               position: 'relative',
               overflow: 'hidden',
-              borderRadius: 5,
+              borderRadius: '20px',
               /* Gradient border */
-              p: '1.5px',
+              padding: '1.5px',
               background: accentGradient(theme.palette.mode),
             }}
           >
-            {/* Card inner */}
-            <Box
-              sx={{
+            {/* Card inner wrapper */}
+            <div
+              style={{
                 position: 'relative',
                 overflow: 'hidden',
                 borderRadius: '18.5px',
@@ -48,11 +53,13 @@ export function Contact() {
                   : 'rgba(255, 255, 255, 0.94)',
                 backdropFilter: 'blur(16px)',
                 WebkitBackdropFilter: 'blur(16px)',
-                px: { xs: 3, md: 8 },
-                py: { xs: 6, md: 9 },
-                /* Blueprint grid overlay */
-                '&::before': {
-                  content: '""',
+                padding: '48px 24px',
+              }}
+            >
+              {/* Blueprint grid overlay */}
+              <div
+                aria-hidden
+                style={{
                   position: 'absolute',
                   inset: 0,
                   backgroundImage: gridBackground(theme.palette.mode),
@@ -62,10 +69,13 @@ export function Contact() {
                   maskImage:
                     'radial-gradient(ellipse 70% 90% at 90% 10%, #000 10%, transparent 70%)',
                   pointerEvents: 'none',
-                },
-                /* Radial glow blob in corner */
-                '&::after': {
-                  content: '""',
+                }}
+              />
+
+              {/* Radial glow blob in corner */}
+              <div
+                aria-hidden
+                style={{
                   position: 'absolute',
                   top: -60,
                   right: -60,
@@ -77,14 +87,14 @@ export function Contact() {
                     : `radial-gradient(circle, ${alpha(violetColor, 0.1)} 0%, transparent 70%)`,
                   pointerEvents: 'none',
                   filter: 'blur(20px)',
-                },
-              }}
-            >
-              <Box sx={{ position: 'relative', zIndex: 1, maxWidth: 640 }}>
+                }}
+              />
+
+              <div style={{ position: 'relative', zIndex: 1, maxWidth: 640 }}>
                 {/* Section label */}
                 <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1.5 }}>
-                  <Box
-                    sx={{
+                  <div
+                    style={{
                       height: 2,
                       width: 24,
                       borderRadius: 4,
@@ -186,11 +196,11 @@ export function Contact() {
                     </Button>
                   </Stack>
                 </Stack>
-              </Box>
-            </Box>
-          </Box>
+              </div>
+            </div>
+          </div>
         </Reveal>
       </Container>
-    </Box>
+    </section>
   );
 }

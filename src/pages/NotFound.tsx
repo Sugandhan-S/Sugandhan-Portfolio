@@ -1,13 +1,12 @@
-import { Box, Button, Container, Stack, Typography } from '@mui/material';
+import { Button, Container, Stack, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link as RouterLink } from 'react-router-dom';
 
 export function NotFound() {
   return (
-    <Box
-      component="main"
+    <main
       id="main"
-      sx={{
+      style={{
         minHeight: '80vh',
         display: 'flex',
         alignItems: 'center',
@@ -28,7 +27,7 @@ export function NotFound() {
             The link may be broken or the page may have moved. Let&rsquo;s get
             you back to solid ground.
           </Typography>
-          <Box>
+          <div>
             <Button
               component={RouterLink}
               to="/"
@@ -38,9 +37,9 @@ export function NotFound() {
             >
               Back home
             </Button>
-          </Box>
+          </div>
         </Stack>
       </Container>
-    </Box>
+    </main>
   );
 }

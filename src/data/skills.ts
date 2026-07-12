@@ -10,7 +10,6 @@ export const skillGroups: SkillGroup[] = [
       'TypeScript',
       'JavaScript',
       'Redux',
-      'Tailwind CSS',
       'HTML5',
       'CSS3',
       'Webpack',
@@ -36,9 +35,7 @@ export const skillGroups: SkillGroup[] = [
     skills: [
       'AWS EC2',
       'AWS Lambda',
-      'AWS S3',
       'SQS',
-      'SNS',
       'CloudWatch',
       'IAM',
       'Load Balancing',

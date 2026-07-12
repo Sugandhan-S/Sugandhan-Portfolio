@@ -179,11 +179,6 @@ export const createAppTheme = (mode: PaletteMode): Theme => {
           body: {
             backgroundColor: c.bg,
             color: c.text,
-            /* Global dot-grid page texture */
-            backgroundImage: `radial-gradient(circle, ${
-              mode === 'dark' ? 'rgba(148,163,184,0.07)' : 'rgba(15,23,42,0.045)'
-            } 1px, transparent 1px)`,
-            backgroundSize: '28px 28px',
           },
           '::selection': {
             backgroundColor: alpha(c.accent, 0.28),

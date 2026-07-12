@@ -1,6 +1,4 @@
 import {
-  Box,
-  Button,
   Container,
   Divider,
   Grid,
@@ -9,15 +7,16 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { keyframes } from '@mui/material/styles';
-import { alpha } from '@mui/material/styles';
+import { alpha, keyframes } from '@mui/material/styles';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import CircleIcon from '@mui/icons-material/Circle';
 import { Reveal } from '../common/Reveal';
-import { gridBackground, heroGlowBackground } from '../../theme/theme';
-import { headlineStats, profile } from '../../data/profile';
+import { DecryptedText } from '../common/DecryptedText';
+import { CountUp } from '../common/CountUp';
+import { MagneticButton } from '../common/MagneticButton';
+import { profile } from '../../data/profile';
 
 const pulse = keyframes`
   0%, 100% { opacity: 1; transform: scale(1); }
@@ -49,39 +48,7 @@ export function Hero() {
   const violetColor = isDark ? '#7C3AED' : '#6D28D9';
 
   return (
-    <Box
-      component="section"
-      id="top"
-      sx={{
-        position: 'relative',
-        overflow: 'hidden',
-        pt: { xs: 8, md: 12 },
-        pb: { xs: 4, md: 8 },
-        /* Layer 1: radial glow blobs */
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: heroGlowBackground(theme.palette.mode),
-          pointerEvents: 'none',
-          zIndex: 0,
-        },
-        /* Layer 2: blueprint grid */
-        '&::after': {
-          content: '""',
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: gridBackground(theme.palette.mode),
-          backgroundSize: '46px 46px',
-          WebkitMaskImage:
-            'radial-gradient(ellipse 90% 70% at 20% 10%, #000 10%, transparent 75%)',
-          maskImage:
-            'radial-gradient(ellipse 90% 70% at 20% 10%, #000 10%, transparent 75%)',
-          pointerEvents: 'none',
-          zIndex: 0,
-        },
-      }}
-    >
+    <section id="top" style={{ paddingTop: 'clamp(64px, 10vw, 96px)', paddingBottom: 'clamp(32px, 6vw, 64px)' }}>
       <Container sx={{ position: 'relative', zIndex: 1 }}>
         <Grid container spacing={{ xs: 4, md: 6 }} alignItems="center">
           {/* ───── LEFT: Text content ───── */}
@@ -89,18 +56,22 @@ export function Hero() {
             <Stack spacing={{ xs: 3, md: 4 }} sx={{ maxWidth: 700 }}>
               <Reveal>
                 <Stack direction="row" spacing={1.25} alignItems="center">
-                  <Box
-                    sx={{
+                  <div
+                    aria-hidden
+                    style={{
                       width: 8,
                       height: 8,
                       borderRadius: '50%',
-                      bgcolor: 'primary.main',
+                      backgroundColor: accentColor,
                       animation: `${pulse} 2.4s ease-in-out infinite`,
                     }}
-                    aria-hidden
                   />
                   <Typography variant="overline" color="text.secondary">
-                    {profile.role} · Fintech &amp; Platforms
+                    <DecryptedText
+                      text={`${profile.role} · Fintech & Platforms`}
+                      delay={300}
+                      speed={30}
+                    />
                   </Typography>
                 </Stack>
               </Reveal>
@@ -149,11 +120,12 @@ export function Hero() {
                   spacing={1.5}
                   sx={{ pt: 1 }}
                 >
-                  <Button
+                  <MagneticButton
                     variant="contained"
                     size="large"
                     endIcon={<ArrowForwardIcon />}
                     onClick={() => scrollTo('work')}
+                    pull={0.15}
                     sx={{
                       background: `linear-gradient(135deg, ${accentColor} 0%, ${violetColor} 100%)`,
                       color: '#fff',
@@ -161,19 +133,19 @@ export function Hero() {
                       '&:hover': {
                         background: `linear-gradient(135deg, ${accentColor} 0%, ${violetColor} 100%)`,
                         boxShadow: `0 6px 28px ${alpha(accentColor, 0.48)}`,
-                        transform: 'translateY(-2px)',
                       },
                     }}
                   >
                     View selected work
-                  </Button>
-                  <Button
+                  </MagneticButton>
+                  <MagneticButton
                     variant="outlined"
                     size="large"
                     onClick={() => scrollTo('contact')}
+                    pull={0.15}
                   >
                     Get in touch
-                  </Button>
+                  </MagneticButton>
                   <Stack direction="row" spacing={0.5} sx={{ alignItems: 'center' }}>
                     <IconButton
                       component="a"
@@ -218,34 +190,79 @@ export function Hero() {
                   divider={<Divider orientation="vertical" flexItem />}
                   sx={{ pt: { xs: 3, md: 5 }, flexWrap: { xs: 'wrap', md: 'nowrap' }, rowGap: 2 }}
                 >
-                  {headlineStats.map((stat) => (
-                    <Box key={stat.label}>
-                      <Typography
-                        sx={{
-                          fontFamily: '"Space Grotesk", sans-serif',
-                          fontWeight: 700,
-                          fontSize: { xs: '1.5rem', md: '1.9rem' },
-                          color: 'primary.main',
-                          letterSpacing: '-0.02em',
-                          lineHeight: 1,
-                        }}
-                      >
-                        {stat.value}
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        color="text.secondary"
-                        sx={{
-                          fontFamily: '"JetBrains Mono", monospace',
-                          letterSpacing: '0.02em',
-                          mt: 0.5,
-                          display: 'block',
-                        }}
-                      >
-                        {stat.label}
-                      </Typography>
-                    </Box>
-                  ))}
+                  {/* 3.5+ */}
+                  <div>
+                    <Typography
+                      sx={{
+                        fontFamily: '"Space Grotesk", sans-serif',
+                        fontWeight: 700,
+                        fontSize: { xs: '1.5rem', md: '1.9rem' },
+                        color: 'primary.main',
+                        letterSpacing: '-0.02em',
+                        lineHeight: 1,
+                      }}
+                    >
+                      <CountUp to={3.5} decimals={1} duration={1400} delay={200} />
+                      +
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontFamily: '"JetBrains Mono", monospace', letterSpacing: '0.02em', mt: 0.5, display: 'block' }}>
+                      Years shipping
+                    </Typography>
+                  </div>
+                  {/* 40% */}
+                  <div>
+                    <Typography
+                      sx={{
+                        fontFamily: '"Space Grotesk", sans-serif',
+                        fontWeight: 700,
+                        fontSize: { xs: '1.5rem', md: '1.9rem' },
+                        color: 'primary.main',
+                        letterSpacing: '-0.02em',
+                        lineHeight: 1,
+                      }}
+                    >
+                      <CountUp to={40} duration={1600} delay={350} />%
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontFamily: '"JetBrains Mono", monospace', letterSpacing: '0.02em', mt: 0.5, display: 'block' }}>
+                      Faster content gen
+                    </Typography>
+                  </div>
+                  {/* 24/7 — not a pure number, skip CountUp */}
+                  <div>
+                    <Typography
+                      sx={{
+                        fontFamily: '"Space Grotesk", sans-serif',
+                        fontWeight: 700,
+                        fontSize: { xs: '1.5rem', md: '1.9rem' },
+                        color: 'primary.main',
+                        letterSpacing: '-0.02em',
+                        lineHeight: 1,
+                      }}
+                    >
+                      <CountUp to={24} duration={1400} delay={200} />/7
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontFamily: '"JetBrains Mono", monospace', letterSpacing: '0.02em', mt: 0.5, display: 'block' }}>
+                      Trading uptime built
+                    </Typography>
+                  </div>
+                  {/* 3 */}
+                  <div>
+                    <Typography
+                      sx={{
+                        fontFamily: '"Space Grotesk", sans-serif',
+                        fontWeight: 700,
+                        fontSize: { xs: '1.5rem', md: '1.9rem' },
+                        color: 'primary.main',
+                        letterSpacing: '-0.02em',
+                        lineHeight: 1,
+                      }}
+                    >
+                      <CountUp to={3} duration={1000} delay={500} />
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontFamily: '"JetBrains Mono", monospace', letterSpacing: '0.02em', mt: 0.5, display: 'block' }}>
+                      Products delivered
+                    </Typography>
+                  </div>
                 </Stack>
               </Reveal>
             </Stack>
@@ -263,19 +280,19 @@ export function Hero() {
             }}
           >
             <Reveal delay={0.18}>
-              <Box
-                sx={{
+              <div
+                style={{
                   position: 'relative',
-                  width: { xs: 200, sm: 240, md: 300 },
-                  height: { xs: 200, sm: 240, md: 300 },
-                  mx: 'auto',
+                  width: 'clamp(200px, 26vw, 300px)',
+                  height: 'clamp(200px, 26vw, 300px)',
+                  margin: '0 auto',
                   animation: `${float} 6s ease-in-out infinite`,
                 }}
               >
                 {/* Outer rotating dashed ring */}
-                <Box
+                <div
                   aria-hidden
-                  sx={{
+                  style={{
                     position: 'absolute',
                     inset: -16,
                     borderRadius: '50%',
@@ -285,9 +302,9 @@ export function Hero() {
                 />
 
                 {/* Inner rotating dashed ring (opposite direction) */}
-                <Box
+                <div
                   aria-hidden
-                  sx={{
+                  style={{
                     position: 'absolute',
                     inset: -32,
                     borderRadius: '50%',
@@ -297,9 +314,9 @@ export function Hero() {
                 />
 
                 {/* Glow behind photo */}
-                <Box
+                <div
                   aria-hidden
-                  sx={{
+                  style={{
                     position: 'absolute',
                     inset: -4,
                     borderRadius: '50%',
@@ -311,9 +328,9 @@ export function Hero() {
                 />
 
                 {/* Gradient border ring */}
-                <Box
+                <div
                   aria-hidden
-                  sx={{
+                  style={{
                     position: 'absolute',
                     inset: -3,
                     borderRadius: '50%',
@@ -323,24 +340,22 @@ export function Hero() {
                 />
 
                 {/* White/dark separator ring */}
-                <Box
+                <div
                   aria-hidden
-                  sx={{
+                  style={{
                     position: 'absolute',
                     inset: -1,
                     borderRadius: '50%',
-                    background: 'background.default',
-                    bgcolor: 'background.default',
+                    background: isDark ? '#060d1a' : '#ffffff',
                     zIndex: 2,
                   }}
                 />
 
                 {/* Profile photo */}
-                <Box
-                  component="img"
+                <img
                   src="/Profile Photo.png"
                   alt="Sugandhan S — Full-Stack Engineer"
-                  sx={{
+                  style={{
                     position: 'relative',
                     zIndex: 3,
                     width: '100%',
@@ -353,31 +368,23 @@ export function Hero() {
                 />
 
                 {/* Availability badge */}
-                <Box
-                  sx={{
+                <div
+                  style={{
                     position: 'absolute',
-                    bottom: { xs: -18, md: -20 },
+                    bottom: -20,
                     left: '50%',
                     transform: 'translateX(-50%)',
                     zIndex: 10,
                     display: 'flex',
                     alignItems: 'center',
-                    gap: 0.75,
-                    px: 1.75,
-                    py: 0.75,
+                    gap: '6px',
+                    padding: '6px 14px',
                     borderRadius: 99,
-                    bgcolor: isDark
-                      ? 'rgba(17, 26, 46, 0.88)'
-                      : 'rgba(255,255,255,0.92)',
+                    backgroundColor: isDark ? 'rgba(17,26,46,0.88)' : 'rgba(255,255,255,0.92)',
                     backdropFilter: 'blur(12px)',
                     WebkitBackdropFilter: 'blur(12px)',
-                    border: '1px solid',
-                    borderColor: isDark
-                      ? 'rgba(90,200,216,0.22)'
-                      : 'rgba(15,122,136,0.18)',
-                    boxShadow: isDark
-                      ? '0 4px 20px rgba(0,0,0,0.4)'
-                      : '0 4px 20px rgba(0,0,0,0.1)',
+                    border: `1px solid ${isDark ? 'rgba(90,200,216,0.22)' : 'rgba(15,122,136,0.18)'}`,
+                    boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.4)' : '0 4px 20px rgba(0,0,0,0.1)',
                     whiteSpace: 'nowrap',
                   }}
                 >
@@ -399,12 +406,12 @@ export function Hero() {
                   >
                     Open to opportunities
                   </Typography>
-                </Box>
-              </Box>
+                </div>
+              </div>
             </Reveal>
           </Grid>
         </Grid>
       </Container>
-    </Box>
+    </section>
   );
 }

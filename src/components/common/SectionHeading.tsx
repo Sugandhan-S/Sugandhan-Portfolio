@@ -1,4 +1,5 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Stack, Typography, useTheme } from '@mui/material';
+import { ShinyText } from './ShinyText';
 
 interface SectionHeadingProps {
   /** Two-digit index, e.g. "01" — encodes reading order down the page. */
@@ -8,6 +9,7 @@ interface SectionHeadingProps {
 }
 
 export function SectionHeading({ index, eyebrow, title }: SectionHeadingProps) {
+  const theme = useTheme();
   return (
     <Stack spacing={1.5} sx={{ mb: { xs: 4, md: 6 } }}>
       <Stack direction="row" spacing={1.5} alignItems="center">
@@ -18,13 +20,17 @@ export function SectionHeading({ index, eyebrow, title }: SectionHeadingProps) {
         >
           {index}
         </Typography>
-        <Box
-          sx={{ width: 24, height: '1px', bgcolor: 'divider' }}
+        <div
           aria-hidden
+          style={{ width: 24, height: 1, backgroundColor: theme.palette.divider }}
         />
-        <Typography component="span" variant="overline" color="text.secondary">
-          {eyebrow}
-        </Typography>
+        <ShinyText
+          component="span"
+          variant="overline"
+          text={eyebrow.toUpperCase()}
+          speed={6}
+          sx={{ letterSpacing: '0.16em' }}
+        />
       </Stack>
       <Typography
         variant="h3"
