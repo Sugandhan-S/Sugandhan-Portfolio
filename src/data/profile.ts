@@ -12,7 +12,7 @@ export const profile: Profile = {
   phone: '+91 63794 34924',
   availability: 'Open to senior full-stack roles',
   links: {
-    github: 'https://github.com/sugandhan11',
+    github: 'https://github.com/Sugandhan-S/',
     linkedin: 'https://linkedin.com/in/sugandhan-s',
     // Place your résumé PDF in /public and reference it here.
     resumeUrl: '/Sugandhan_Resume.pdf',
