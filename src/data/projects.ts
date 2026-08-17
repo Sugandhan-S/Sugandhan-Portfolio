@@ -6,6 +6,28 @@ import type { Project } from '../types';
  */
 export const projects: Project[] = [
   {
+    id: 'api-forge',
+    title: 'API-Forge',
+    origin: 'Personal Project',
+    summary:
+      'Visual API Designer & Mock Engine. Design, mock, test, and document production-ready APIs visually.',
+    impact:
+      'Engineered an open-source visual API design workspace allowing users to design endpoints, attach schemas, and instantly spin up live mock servers.',
+    stack: ['React 19', 'TypeScript', 'Express', 'Supabase', 'React Flow'],
+    href: 'https://api-forge-azure.vercel.app/',
+  },
+  {
+    id: 'pulseboard',
+    title: 'PulseBoard',
+    origin: 'Personal Project',
+    summary:
+      'A beautifully crafted, blazing-fast task and activity board built without heavy JS frameworks.',
+    impact:
+      'Delivered a premium SPA experience featuring real-time interactivity, instant DOM swaps, and persistent cloud data hosting.',
+    stack: ['HTMX', 'Node.js', 'Express', 'PostgreSQL', 'EJS'],
+    href: 'https://pulseboard-organizee.onrender.com/',
+  },
+  {
     id: 'meradhan-platform',
     title: 'Bond-Trading Platform',
     origin: 'MeraDhan',
