@@ -109,7 +109,7 @@ function ProjectCard({ project, isDark, accentColor, violetColor, theme }: Proje
           {project.impact}
         </Typography>
 
-        <div style={{ marginTop: 'auto' }}>
+        <Box sx={{ mt: 'auto', pt: 2 }}>
           <Stack
             direction="row"
             spacing={0.75}
@@ -139,7 +139,7 @@ function ProjectCard({ project, isDark, accentColor, violetColor, theme }: Proje
               View project
             </Button>
           )}
-        </div>
+        </Box>
       </SpotlightCard>
     </div>
   );
@@ -150,6 +150,9 @@ export function Projects() {
   const isDark = theme.palette.mode === 'dark';
   const accentColor = theme.palette.primary.main;
   const violetColor = isDark ? '#7C3AED' : '#6D28D9';
+
+  const personalProjects = projects.filter(p => p.origin === 'Personal Project');
+  const workProjects = projects.filter(p => p.origin !== 'Personal Project');
 
   return (
     <Box
@@ -173,13 +176,36 @@ export function Projects() {
           <SectionHeading
             index="01"
             eyebrow="Selected work"
-            title="Systems I've built and shipped"
+            title="Projects & Systems"
           />
         </Reveal>
 
-        {/* alignItems="stretch" on the Grid + display:flex on items makes all cards equal height */}
+        <Typography variant="h6" sx={{ mb: 3, mt: 1, color: 'text.primary', fontWeight: 600 }}>
+          Open Source & Side Builds
+        </Typography>
+
+        <Grid container spacing={3} alignItems="stretch" sx={{ mb: 6 }}>
+          {personalProjects.map((project, i) => (
+            <Grid item xs={12} md={6} key={project.id} sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Reveal delay={i * 0.08} style={{ display: 'flex', flexDirection: 'column', flex: 1, width: '100%' }}>
+                <ProjectCard
+                  project={project}
+                  isDark={isDark}
+                  accentColor={accentColor}
+                  violetColor={violetColor}
+                  theme={theme}
+                />
+              </Reveal>
+            </Grid>
+          ))}
+        </Grid>
+
+        <Typography variant="h6" sx={{ mb: 3, color: 'text.primary', fontWeight: 600 }}>
+          Professional Experience
+        </Typography>
+
         <Grid container spacing={3} alignItems="stretch">
-          {projects.map((project, i) => (
+          {workProjects.map((project, i) => (
             <Grid item xs={12} md={4} key={project.id} sx={{ display: 'flex', flexDirection: 'column' }}>
               <Reveal delay={i * 0.08} style={{ display: 'flex', flexDirection: 'column', flex: 1, width: '100%' }}>
                 <ProjectCard
